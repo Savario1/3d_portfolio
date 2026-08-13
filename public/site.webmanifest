@@ -1,0 +1,16 @@
+{
+  "name": "Savario Jenkins — Portfolio",
+  "short_name": "S. Jenkins",
+  "description": "Computer Science student building practical skills in software engineering, AI, cloud computing, and data analytics.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05070d",
+  "theme_color": "#05070d",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
