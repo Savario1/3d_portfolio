@@ -9,9 +9,12 @@ optional terminal easter egg.
 ## Tech stack
 
 - React 19 + Vite
-- Three.js via `@react-three/fiber` and `@react-three/drei` — all geometry is procedural
-  (no external 3D model files)
-- GSAP + ScrollTrigger for scroll choreography
+- Three.js via `@react-three/fiber` and `@react-three/drei` — all geometry, materials, and
+  shaders are procedural (no external 3D model files)
+- `@react-three/postprocessing` for a restrained, high-threshold bloom + vignette pass
+- GSAP + ScrollTrigger for scroll choreography and text-mask reveals
+- Self-hosted variable fonts via `@fontsource` (Space Grotesk for display type, Inter for
+  body text, JetBrains Mono for technical accents) — no external font requests at runtime
 - Plain CSS with custom properties (no CSS framework)
 
 ## Getting started

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import SceneContent from "./SceneContent";
+import PostFX from "./PostFX";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 import { useViewportProfile } from "../hooks/useViewportProfile";
 
@@ -37,6 +38,7 @@ export default function Experience({ progressRef, activeProject, onReady }) {
         allowParallax={!reduceMotion && !isCoarsePointer}
         particleCount={isMobile ? 320 : 900}
       />
+      {!isMobile && !isCoarsePointer && <PostFX />}
     </Canvas>
   );
 }

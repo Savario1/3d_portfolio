@@ -1,8 +1,7 @@
-import { useMemo, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useMemo } from "react";
 import * as THREE from "three";
 import { PROJECT_NODE_POSITIONS } from "./sceneUtils";
-import { palette } from "./palette";
+import SignalRibbon from "./SignalRibbon";
 
 const ORIGIN = new THREE.Vector3(0, 0, 0);
 
@@ -13,57 +12,31 @@ function buildCurve(target, liftY) {
 }
 
 const PATHS = [
-  { id: "ai", target: PROJECT_NODE_POSITIONS.ai, lift: 0.9, color: palette.violetSoft },
-  { id: "cloud", target: PROJECT_NODE_POSITIONS.cloud, lift: 1.3, color: palette.cyanSoft },
-  { id: "data", target: PROJECT_NODE_POSITIONS.data, lift: 0.9, color: palette.violetSoft },
+  { id: "ai", target: PROJECT_NODE_POSITIONS.ai, lift: 1.4, colorSignal: "#c1b8ff" },
+  { id: "cloud", target: PROJECT_NODE_POSITIONS.cloud, lift: 2, colorSignal: "#9df3ff" },
+  { id: "data", target: PROJECT_NODE_POSITIONS.data, lift: 1.4, colorSignal: "#5ff0d9" },
 ];
 
-function SignalPulse({ curve, speed, color, reduceMotion }) {
-  const ref = useRef(null);
-  const offset = useMemo(() => Math.random(), []);
-
-  useFrame((state) => {
-    if (!ref.current || reduceMotion) return;
-    const t = (state.clock.elapsedTime * speed + offset) % 1;
-    const point = curve.getPointAt(t);
-    ref.current.position.copy(point);
-    const fade = Math.sin(t * Math.PI);
-    ref.current.material.opacity = fade;
-  });
-
-  return (
-    <mesh ref={ref}>
-      <sphereGeometry args={[0.05, 8, 8]} />
-      <meshBasicMaterial color={color} transparent opacity={0} blending={THREE.AdditiveBlending} />
-    </mesh>
-  );
-}
-
 export default function DataPaths({ reduceMotion = false }) {
-  const tubes = useMemo(
-    () =>
-      PATHS.map((path) => {
-        const curve = buildCurve(path.target, path.lift);
-        const geometry = new THREE.TubeGeometry(curve, 48, 0.012, 6, false);
-        return { ...path, curve, geometry };
-      }),
+  const paths = useMemo(
+    () => PATHS.map((path) => ({ ...path, curve: buildCurve(path.target, path.lift) })),
     []
   );
 
   return (
     <group>
-      {tubes.map((path) => (
-        <group key={path.id}>
-          <mesh geometry={path.geometry}>
-            <meshBasicMaterial color={path.color} transparent opacity={0.28} />
-          </mesh>
-          {!reduceMotion && (
-            <>
-              <SignalPulse curve={path.curve} speed={0.12} color={path.color} reduceMotion={reduceMotion} />
-              <SignalPulse curve={path.curve} speed={0.09} color={path.color} reduceMotion={reduceMotion} />
-            </>
-          )}
-        </group>
+      {paths.map((path) => (
+        <SignalRibbon
+          key={path.id}
+          curve={path.curve}
+          radius={0.02}
+          colorBase={"#101a30"}
+          colorSignal={path.colorSignal}
+          speed={0.28}
+          density={7}
+          opacity={0.85}
+          reduceMotion={reduceMotion}
+        />
       ))}
     </group>
   );
