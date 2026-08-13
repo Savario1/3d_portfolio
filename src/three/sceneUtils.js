@@ -13,7 +13,7 @@ export const CAMERA_WAYPOINTS = [
   { id: "projects-ai", progress: 0.46, position: [-5.8, 1.8, 2.2], lookAt: [-4.6, 1.3, -3.2] },
   { id: "projects-cloud", progress: 0.57, position: [0, 2.7, 2.7], lookAt: [0, 2, -3.6] },
   { id: "projects-data", progress: 0.68, position: [5.8, 1.8, 2.2], lookAt: [4.6, 1.3, -3.2] },
-  { id: "education", progress: 0.83, position: [0, -2, 6.6], lookAt: [0, -1.3, 1.4] },
+  { id: "education", progress: 0.83, position: [-2.2, -2, 6.6], lookAt: [-1.8, -1.3, 1.4] },
   { id: "contact", progress: 1, position: [0, 0.35, 7.6], lookAt: [0, 0.15, 0.6] },
 ];
 
@@ -22,6 +22,44 @@ export const PROJECT_NODE_POSITIONS = {
   cloud: new THREE.Vector3(0, 2, -3.6),
   data: new THREE.Vector3(4.6, 1.3, -3.2),
 };
+
+/** Stage lighting stops: the world's key light drifts through these colors as the
+ * visitor scrolls, so each stage of the journey has its own atmosphere. */
+export const STAGE_LIGHT_STOPS = [
+  { progress: 0, color: "#4fe3ff" },
+  { progress: 0.16, color: "#8c7bff" },
+  { progress: 0.32, color: "#4fe3ff" },
+  { progress: 0.46, color: "#8c7bff" },
+  { progress: 0.57, color: "#4fe3ff" },
+  { progress: 0.68, color: "#5ff0d9" },
+  { progress: 0.83, color: "#b7adff" },
+  { progress: 1, color: "#ffd9a8" },
+];
+
+const colorA = new THREE.Color();
+const colorB = new THREE.Color();
+
+export function getStageColor(progress, outColor) {
+  const clamped = THREE.MathUtils.clamp(progress, 0, 1);
+  let start = STAGE_LIGHT_STOPS[0];
+  let end = STAGE_LIGHT_STOPS[STAGE_LIGHT_STOPS.length - 1];
+
+  for (let i = 0; i < STAGE_LIGHT_STOPS.length - 1; i += 1) {
+    if (clamped >= STAGE_LIGHT_STOPS[i].progress && clamped <= STAGE_LIGHT_STOPS[i + 1].progress) {
+      start = STAGE_LIGHT_STOPS[i];
+      end = STAGE_LIGHT_STOPS[i + 1];
+      break;
+    }
+  }
+
+  const span = end.progress - start.progress || 1;
+  const localT = smoothstep(THREE.MathUtils.clamp((clamped - start.progress) / span, 0, 1));
+
+  colorA.set(start.color);
+  colorB.set(end.color);
+  outColor.copy(colorA).lerp(colorB, localT);
+  return outColor;
+}
 
 function smoothstep(t) {
   return t * t * (3 - 2 * t);

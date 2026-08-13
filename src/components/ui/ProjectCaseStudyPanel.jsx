@@ -34,6 +34,7 @@ export default function ProjectCaseStudyPanel({ project, onClose }) {
       <div className="case-panel-overlay" onClick={onClose} role="presentation" />
       <aside
         className="case-panel"
+        data-scene={project.sceneRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="case-panel-heading"

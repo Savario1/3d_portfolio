@@ -3,18 +3,26 @@ import SectionHeading from "../ui/SectionHeading";
 
 export default function AboutSection({ sectionRef }) {
   return (
-    <section id="about" ref={sectionRef} className="section" aria-labelledby="about-heading">
-      <div className="section-inner about__grid">
-        <div className="glass-panel about__copy">
+    <section id="about" ref={sectionRef} className="section about-pathway" aria-labelledby="about-heading">
+      <div className="section-inner about-pathway__layout">
+        <header className="about-pathway__intro">
           <SectionHeading eyebrow={about.eyebrow} heading={about.heading} id="about-heading" />
-          {about.paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
+        </header>
+
+        <div className="about-pathway__rail" aria-hidden="true" />
+
+        <div className="about-pathway__stops">
+          {about.paragraphs.map((paragraph, i) => (
+            <p className={`about-pathway__stop${i === 1 ? " about-pathway__stop--offset" : ""}`} key={paragraph}>
+              {paragraph}
+            </p>
           ))}
+
+          <aside className="about-pathway__discovery">
+            <span className="about-pathway__discovery-label">{about.beyondTheCode.label}</span>
+            <p>{about.beyondTheCode.text}</p>
+          </aside>
         </div>
-        <aside className="beyond-code glass-panel">
-          <span className="beyond-code__label">{about.beyondTheCode.label}</span>
-          <p className="beyond-code__text">{about.beyondTheCode.text}</p>
-        </aside>
       </div>
     </section>
   );

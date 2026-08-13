@@ -1,3 +1,5 @@
+import { useMagnetic } from "../../hooks/useMagnetic";
+
 /**
  * Shared action button. Renders as a link, a button, or — when no real destination
  * exists yet — a disabled "Coming Soon" element instead of a dead `#` link.
@@ -9,12 +11,16 @@ export default function Button({
   comingSoonLabel = "Coming Soon",
   variant = "secondary",
   small = false,
+  magnetic = false,
   onClick,
   type = "button",
   className = "",
   children,
   ...rest
 }) {
+  const magneticRef = useMagnetic(0.3);
+  const ref = magnetic ? magneticRef : undefined;
+
   const classes = ["btn", `btn--${variant}`, small ? "btn--small" : "", className]
     .filter(Boolean)
     .join(" ");
@@ -31,14 +37,14 @@ export default function Button({
   if (href) {
     const externalProps = external ? { target: "_blank", rel: "noopener noreferrer" } : {};
     return (
-      <a className={classes} href={href} {...externalProps} {...rest}>
+      <a className={classes} href={href} ref={ref} {...externalProps} {...rest}>
         {children}
       </a>
     );
   }
 
   return (
-    <button className={classes} type={type} onClick={onClick} {...rest}>
+    <button className={classes} type={type} onClick={onClick} ref={ref} {...rest}>
       {children}
     </button>
   );
