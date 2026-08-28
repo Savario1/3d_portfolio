@@ -22,8 +22,8 @@ export default function ContactPortrait({ src, alt }) {
             />
           </svg>
           <p className="portrait-frame__placeholder-text">
-            Add <code>contact-portrait.jpg</code> to <code>/public</code> to display the photograph
-            here.
+            Add <code>contact-portrait.webp</code> to <code>/public</code> to display the
+            photograph here.
           </p>
         </div>
       </div>

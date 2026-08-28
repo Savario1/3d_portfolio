@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Update this to your real deployed domain once it goes live.
-Sitemap: https://YOUR-DOMAIN-HERE.com/sitemap.xml
+Sitemap: https://savariojenkins.com/sitemap.xml

@@ -67,7 +67,15 @@ export default function EducationSection({ sectionRef }) {
                   <span className="education-path__title">{item.credential}</span>
                   <span className="badge">{item.status}</span>
                 </div>
+                {(item.institution || item.expected) && (
+                  <p className="education-path__meta">
+                    {[item.institution, item.expected].filter(Boolean).join(" · ")}
+                  </p>
+                )}
                 <p className="education-path__note">{item.note}</p>
+                {item.supportingNote && (
+                  <p className="education-path__supporting-note">{item.supportingNote}</p>
+                )}
               </div>
             </li>
           ))}

@@ -24,9 +24,20 @@ export default function SkillsSection({ sectionRef }) {
                 ? (activeIndex / (group.items.length - 1)) * 100
                 : 50;
 
+            const isLearning = group.variant === "learning";
+
             return (
-              <div className="skills-circuit__group" key={group.label}>
-                <span className="skills-circuit__group-label">{group.label}</span>
+              <div
+                className={`skills-circuit__group${isLearning ? " skills-circuit__group--learning" : ""}`}
+                key={group.label}
+              >
+                <span className="skills-circuit__group-label">
+                  {group.label}
+                  {isLearning && <span className="skills-circuit__group-tag">In Progress</span>}
+                </span>
+                {isLearning && group.note && (
+                  <span className="visually-hidden">{group.note}</span>
+                )}
                 <div className={`skills-circuit__rail${activeIndex !== null ? " is-active" : ""}`}>
                   <span
                     className="skills-circuit__pulse"

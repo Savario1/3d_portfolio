@@ -1,15 +1,29 @@
 import { useEffect, useRef } from "react";
 import Button from "./Button";
 
-const FIELD_LABELS = [
-  ["overview", "Project Overview"],
-  ["problem", "Problem"],
+const LEGACY_FIELD_LABELS = [
   ["architecture", "Architecture"],
-  ["process", "Development Process"],
-  ["challenges", "Challenges"],
   ["results", "Results"],
+  ["challenges", "Challenges"],
   ["learned", "What I Learned"],
 ];
+
+function ListField({ label, items, emptyLabel }) {
+  return (
+    <div className="case-panel__field">
+      <h3>{label}</h3>
+      {items.length > 0 ? (
+        <ul className="modal-panel__list">
+          {items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>{emptyLabel}</p>
+      )}
+    </div>
+  );
+}
 
 export default function ProjectCaseStudyPanel({ project, onClose }) {
   const closeButtonRef = useRef(null);
@@ -27,7 +41,13 @@ export default function ProjectCaseStudyPanel({ project, onClose }) {
     };
   }, [onClose]);
 
-  const { caseStudy } = project;
+  const { development, caseStudy } = project;
+
+  // The legacy case-study fields (architecture, results, challenges, what-I-learned,
+  // screenshots) stay in the data model for later, but only render once real content
+  // exists — never as empty "coming soon" placeholders.
+  const filledLegacyFields = LEGACY_FIELD_LABELS.filter(([key]) => caseStudy[key]);
+  const hasScreenshots = caseStudy.screenshots.length > 0;
 
   return (
     <>
@@ -56,30 +76,51 @@ export default function ProjectCaseStudyPanel({ project, onClose }) {
         <p className="case-panel__summary">{project.summary}</p>
         <span className="badge">{project.status}</span>
 
-        {FIELD_LABELS.map(([key, label]) => (
+        <div className="case-panel__field">
+          <h3>Project Goal</h3>
+          <p className="case-panel__prose">{development.goal}</p>
+        </div>
+
+        <ListField
+          label="Planned Capabilities"
+          items={development.plannedCapabilities}
+          emptyLabel="Not yet defined."
+        />
+
+        <ListField
+          label="Confirmed Technologies"
+          items={development.confirmedTechnologies}
+          emptyLabel="Not yet selected."
+        />
+
+        <ListField
+          label="Current Learning Focus"
+          items={development.currentLearningFocus}
+          emptyLabel="Not yet defined."
+        />
+
+        <div className="case-panel__field">
+          <h3>Next Milestone</h3>
+          <p className="case-panel__prose">{development.nextMilestone}</p>
+        </div>
+
+        {filledLegacyFields.map(([key, label]) => (
           <div className="case-panel__field" key={key}>
             <h3>{label}</h3>
-            <p>{caseStudy[key]}</p>
+            <p className="case-panel__prose">{caseStudy[key]}</p>
           </div>
         ))}
 
-        <div className="case-panel__field">
-          <h3>Technologies</h3>
-          {caseStudy.technologies.length > 0 ? (
+        {hasScreenshots && (
+          <div className="case-panel__field">
+            <h3>Screenshots</h3>
             <ul className="modal-panel__list">
-              {caseStudy.technologies.map((tech) => (
-                <li key={tech}>{tech}</li>
+              {caseStudy.screenshots.map((src) => (
+                <li key={src}>{src}</li>
               ))}
             </ul>
-          ) : (
-            <p>Details coming soon.</p>
-          )}
-        </div>
-
-        <div className="case-panel__field">
-          <h3>Screenshots</h3>
-          <p>{caseStudy.screenshots.length > 0 ? "" : "Details coming soon."}</p>
-        </div>
+          </div>
+        )}
 
         <div className="case-panel__links">
           <Button href={project.github} external disabled={!project.github} small>

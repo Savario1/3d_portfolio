@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { siteConfig } from "../../config/site";
-import { about, skills, education } from "../../config/content";
+import { about, skills, education, completedFoundations } from "../../config/content";
 import { projects } from "../../config/projects";
 import Button from "./Button";
 
@@ -25,7 +25,9 @@ export default function QuickViewModal({ onClose }) {
     if (event.target === overlayRef.current) onClose();
   };
 
-  const allSkills = skills.groups.flatMap((group) => group.items);
+  const languageGroup = skills.groups.find((group) => group.label === "Languages");
+  const toolsGroup = skills.groups.find((group) => group.label === "Tools & Workflow");
+  const learningGroup = skills.groups.find((group) => group.variant === "learning");
 
   return (
     <div
@@ -62,28 +64,76 @@ export default function QuickViewModal({ onClose }) {
         </section>
 
         <section className="modal-panel__section">
-          <h3>Skills</h3>
-          <ul className="modal-panel__list">
-            {allSkills.map((skill) => (
-              <li key={skill}>{skill}</li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="modal-panel__section">
-          <h3>Education &amp; Certifications</h3>
+          <h3>Education</h3>
           <div>
             {education.items.map((item) => (
               <div className="modal-panel__row" key={item.credential}>
-                <span className="modal-panel__row-label">{item.credential}</span>
+                <span className="modal-panel__row-label">
+                  {item.credential}
+                  {item.institution && (
+                    <span className="modal-panel__row-sub">
+                      {[item.institution, item.expected].filter(Boolean).join(" · ")}
+                    </span>
+                  )}
+                </span>
                 <span className="modal-panel__row-meta">{item.status}</span>
               </div>
             ))}
           </div>
         </section>
 
+        {languageGroup && (
+          <section className="modal-panel__section">
+            <h3>Languages</h3>
+            <ul className="modal-panel__list">
+              {languageGroup.items.map((skill) => (
+                <li key={skill}>{skill}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {toolsGroup && (
+          <section className="modal-panel__section">
+            <h3>Tools &amp; Workflow</h3>
+            <ul className="modal-panel__list">
+              {toolsGroup.items.map((skill) => (
+                <li key={skill}>{skill}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {learningGroup && (
+          <section className="modal-panel__section">
+            <h3>Currently Learning</h3>
+            <ul className="modal-panel__list">
+              {learningGroup.items.map((skill) => (
+                <li key={skill}>{skill}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         <section className="modal-panel__section">
-          <h3>Project Status</h3>
+          <h3>Completed Foundations</h3>
+          {completedFoundations.items.map((item) => (
+            <div key={item.title}>
+              <div className="modal-panel__row">
+                <span className="modal-panel__row-label">{item.title}</span>
+                <span className="modal-panel__row-meta">{item.status}</span>
+              </div>
+              {item.details.map((detail) => (
+                <p className="modal-panel__detail" key={detail}>
+                  {detail}
+                </p>
+              ))}
+            </div>
+          ))}
+        </section>
+
+        <section className="modal-panel__section">
+          <h3>Projects In Development</h3>
           <div>
             {projects.map((project) => (
               <div className="modal-panel__row" key={project.id}>

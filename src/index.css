@@ -402,6 +402,74 @@ h4 {
   background: currentColor;
 }
 
+.badge--done {
+  border-style: solid;
+  color: var(--cyan-soft);
+  background: rgba(79, 227, 255, 0.08);
+}
+
+/* ============================================================
+   Completed Foundations — a compact recruiter-facing proof block
+   inside the Projects section; deliberately quieter than the three
+   flagship destinations above it.
+   ============================================================ */
+.completed-foundations {
+  margin-top: 2.5rem;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--cyan);
+  border-radius: var(--radius-md);
+  background: rgba(79, 227, 255, 0.04);
+}
+
+.completed-foundations__heading {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan-soft);
+  margin-bottom: 1rem;
+}
+
+.completed-foundations__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.completed-foundations__title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white-soft);
+}
+
+.completed-foundations__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.completed-foundations__tech li {
+  font-size: var(--fs-micro);
+  font-family: var(--font-mono);
+  color: var(--ink-dim);
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.7rem;
+}
+
+.completed-foundations__detail {
+  color: var(--ink-dim);
+  font-size: var(--fs-small);
+  max-width: 68ch;
+}
+
 /* ============================================================
    Top bar
    ============================================================ */
@@ -860,7 +928,44 @@ h4 {
   text-transform: uppercase;
   color: var(--cyan-soft);
   margin-bottom: 1.1rem;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.skills-circuit__group-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--violet-soft);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-full);
+  padding: 0.15rem 0.6rem;
+  background: rgba(140, 123, 255, 0.08);
+}
+
+/* "Currently Learning" nodes read as in-progress: dashed borders, violet dot,
+   slightly muted text — distinct from established skills without any ratings. */
+.skills-circuit__group--learning .skills-circuit__node {
+  border-style: dashed;
+  color: var(--ink-dim);
+}
+
+.skills-circuit__group--learning .skills-circuit__node-dot {
+  background: var(--violet);
+  box-shadow: 0 0 8px 1px rgba(140, 123, 255, 0.55);
+}
+
+.skills-circuit__group--learning .skills-circuit__node:hover,
+.skills-circuit__group--learning .skills-circuit__node:focus-visible {
+  border-color: var(--violet);
+  color: var(--violet-soft);
+  box-shadow: 0 0 22px rgba(140, 123, 255, 0.22);
+}
+
+.skills-circuit__group--learning .skills-circuit__node:hover .skills-circuit__node-dot,
+.skills-circuit__group--learning .skills-circuit__node:focus-visible .skills-circuit__node-dot {
+  background: var(--violet);
+  box-shadow: 0 0 10px 2px rgba(140, 123, 255, 0.7);
 }
 
 .skills-circuit__rail {
@@ -1047,9 +1152,25 @@ h4 {
   color: var(--white-soft);
 }
 
+.education-path__meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.04em;
+  color: var(--cyan-soft);
+  margin-bottom: 0.5rem;
+}
+
 .education-path__note {
   color: var(--ink-dim);
   max-width: 60ch;
+}
+
+.education-path__supporting-note {
+  margin-top: 0.5rem;
+  max-width: 60ch;
+  color: var(--ink-faint);
+  font-size: var(--fs-small);
+  font-style: italic;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1450,6 +1571,21 @@ h4 {
   text-align: right;
 }
 
+.modal-panel__row-sub {
+  display: block;
+  font-weight: 400;
+  font-size: var(--fs-micro);
+  font-family: var(--font-mono);
+  color: var(--cyan-soft);
+  margin-top: 0.2rem;
+}
+
+.modal-panel__detail {
+  color: var(--ink-dim);
+  font-size: var(--fs-small);
+  margin-top: 0.6rem;
+}
+
 /* ============================================================
    Project case-study panel
    ============================================================ */
@@ -1531,6 +1667,13 @@ h4 {
   color: var(--ink-faint);
   font-style: italic;
   font-size: var(--fs-small);
+}
+
+/* Real development content — readable, not the faint italic used for empty states. */
+.case-panel__field p.case-panel__prose {
+  color: var(--ink-dim);
+  font-style: normal;
+  font-size: var(--fs-body);
 }
 
 .case-panel__links {

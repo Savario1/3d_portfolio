@@ -10,30 +10,31 @@ export const siteConfig = {
     shortName: "Savario",
     role: "Computer Science Student | Aspiring Software Engineer | AI, Cloud & Data",
     tagline:
-      "I'm building practical skills across software engineering, artificial intelligence, cloud computing, and data analytics—with a focus on creating reliable projects that solve real problems.",
+      "Computer Science student building a foundation in software engineering through C++, C#, Python, Java, and JavaScript while actively developing skills in artificial intelligence, AWS cloud infrastructure, Terraform, and data analytics.",
     email: "hello@savariojenkins.com",
   },
 
   // Fill these in as accounts/profiles go live. Leave `null` to show "Coming Soon".
   links: {
-    github: null,
-    linkedin: null,
+    github: "https://github.com/Savario1",
+    linkedin: "https://www.linkedin.com/in/savariojenkins/",
   },
 
-  // Local, site-relative asset paths. See README for how to replace the placeholder files.
+  // Local, site-relative asset paths. See EDITING_GUIDE.md for how to replace these files.
   assets: {
     resume: "/resume-savario-jenkins.pdf",
-    contactPortrait: "/contact-portrait.jpg",
+    contactPortrait: "/contact-portrait.webp",
     favicon: "/favicon.svg",
+    ogImage: "/og-image.png",
   },
 
-  // Set this once a production domain is live (used for canonical / Open Graph tags).
+  // Production domain — used to build canonical / Open Graph / Twitter absolute URLs.
   // Leave empty to omit domain-specific meta tags rather than publish a placeholder URL.
-  siteUrl: "",
+  siteUrl: "https://savariojenkins.com",
 
   meta: {
     title: "Savario Jenkins — Computer Science Student & Aspiring Software Engineer",
     description:
-      "Portfolio of Savario Jenkins, a Computer Science student building practical skills in software engineering, AI, cloud computing, and data analytics.",
+      "Portfolio of Savario Jenkins, a Computer Science student building practical skills in software engineering, artificial intelligence, cloud infrastructure, and data analytics.",
   },
 };

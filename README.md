@@ -38,44 +38,29 @@ All real content lives in three files — edit these, not the components:
 | `src/config/content.js` | About text, "Beyond the Code" note, skills list, education/certification entries |
 | `src/config/projects.js` | The three project destinations and their full case-study content |
 
-**Links:** `siteConfig.links.github` and `siteConfig.links.linkedin` are `null` until you
-add real URLs. While `null`, those buttons render a disabled "Coming Soon" state instead
-of linking to `#`. Fill them in as soon as the profiles are live.
+**Links:** `siteConfig.links.github` and `siteConfig.links.linkedin` hold the live
+profile URLs. If a link is ever set back to `null`, that button renders a disabled
+"Coming Soon" state instead of linking to `#`.
 
 **Projects:** `src/config/projects.js` is the single source of truth for the project
-case-study panels (overview, problem, architecture, technologies, process, challenges,
-results, what-was-learned, screenshots, GitHub, demo). Every field currently reads
-"Details coming soon" / `null` intentionally — nothing was invented. Fill in each field
-as that project actually develops. `github` / `demo` follow the same "Coming Soon until
-real" pattern as the social links above.
+detail panels. Each in-development project shows its goal, planned capabilities,
+confirmed technologies, current learning focus, and next milestone. The `caseStudy`
+fields (architecture, results, challenges, what-was-learned, screenshots) stay hidden
+until real content exists — see `EDITING_GUIDE.md` for how to fill everything in as
+each project develops.
 
-## Replacing placeholder assets
+## Assets
 
-Two files are expected in `/public` and are **not** included with real content:
-
-1. **`/public/resume-savario-jenkins.pdf`**
-   A minimal placeholder PDF ships here so the "Download Résumé" button never 404s.
-   Replace it with your real résumé, keeping the exact same filename (or update
-   `siteConfig.assets.resume` in `src/config/site.js` if you rename it).
-
-2. **`/public/contact-portrait.jpg`**
-   This file does **not** exist yet. The Contact section will automatically show a
-   tasteful placeholder frame (with instructions) until you add it. Drop your
-   navy-suit photograph in at exactly this path and filename, and it will appear in the
-   glass portrait frame in the Contact section automatically — no code changes needed.
-   Use a reasonably high-resolution, portrait-oriented (roughly 4:5) JPEG for the best
-   crop.
-
-Other editable brand assets:
-
+- **`/public/resume-savario-jenkins.pdf`** — the real résumé served by every
+  "Download Résumé" button. To update it, replace the file and keep the same name.
+- **`/public/contact-portrait.webp`** — the optimized Contact-section headshot. If the
+  file is missing or fails to load, the Contact section shows a tasteful placeholder
+  frame instead. See `EDITING_GUIDE.md` for replacement steps.
 - `/public/favicon.svg` — browser tab icon (procedural SVG mark, easy to restyle)
-- `/public/og-image.svg` — social share preview image (1200×630). Consider exporting a
-  PNG/JPEG version for maximum compatibility with link-preview crawlers that don't
-  render SVG, then point the `og:image` / `twitter:image` tags in `index.html` at it.
-- `/public/robots.txt` and `/public/sitemap.xml` — replace `YOUR-DOMAIN-HERE.com` with
-  your real deployed domain once one exists.
-- `src/config/site.js` → `siteUrl` — set this once a production domain exists; it's left
-  blank on purpose rather than publishing a placeholder URL.
+- `/public/og-image.png` — 1200×630 social share preview referenced by absolute URL in
+  `index.html`
+- `/public/robots.txt` and `/public/sitemap.xml` — point at `https://savariojenkins.com`
+- `src/config/site.js` → `siteUrl` — the production domain used for canonical/OG tags
 
 ## Features
 

@@ -1,4 +1,5 @@
 import { projects } from "../../config/projects";
+import { completedFoundations } from "../../config/content";
 import SectionHeading from "../ui/SectionHeading";
 import Button from "../ui/Button";
 
@@ -62,6 +63,30 @@ export default function ProjectsSection({ sectionRef, onSelectProject }) {
             </div>
           ))}
         </div>
+
+        <aside className="completed-foundations" aria-labelledby="completed-foundations-heading">
+          <h3 className="completed-foundations__heading" id="completed-foundations-heading">
+            {completedFoundations.eyebrow}
+          </h3>
+          {completedFoundations.items.map((item) => (
+            <div className="completed-foundations__item" key={item.title}>
+              <div className="completed-foundations__top">
+                <span className="completed-foundations__title">{item.title}</span>
+                <span className="badge badge--done">{item.status}</span>
+              </div>
+              <ul className="completed-foundations__tech">
+                {item.technologies.map((tech) => (
+                  <li key={tech}>{tech}</li>
+                ))}
+              </ul>
+              {item.details.map((detail) => (
+                <p className="completed-foundations__detail" key={detail}>
+                  {detail}
+                </p>
+              ))}
+            </div>
+          ))}
+        </aside>
       </div>
     </section>
   );
